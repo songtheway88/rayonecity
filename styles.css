@@ -54,6 +54,8 @@ html {
   line-height: 1.6;
   color: var(--text-dark);
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body, h1, h2, h3, h4, h5, h6, p, li, a, span, label, dt, dd {
@@ -64,6 +66,7 @@ body, h1, h2, h3, h4, h5, h6, p, li, a, span, label, dt, dd {
 body {
   background-color: var(--bg-white);
   overflow-x: hidden;
+  max-width: 100%;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -147,6 +150,7 @@ button {
 }
 
 .image-slot:has(img) {
+  min-height: auto;
   background: var(--bg-white);
   border-style: solid;
   border-color: var(--border-color);
@@ -343,13 +347,15 @@ button {
   flex-direction: column;
   gap: 20px;
   transform: translateX(100%);
-  transition: transform var(--transition-speed) ease-in-out;
+  transition: transform var(--transition-speed) ease-in-out, visibility var(--transition-speed);
   border-top: 1px solid var(--border-color);
   z-index: 999;
+  visibility: hidden;
 }
 
 .mobile-nav.open {
   transform: translateX(0);
+  visibility: visible;
 }
 
 .mobile-nav a {
@@ -593,7 +599,8 @@ button {
 }
 
 .video-placeholder {
-  min-height: 250px;
+  width: 100%;
+  min-height: auto;
   aspect-ratio: 16 / 9;
   cursor: pointer;
   border: 1px solid var(--border-color);

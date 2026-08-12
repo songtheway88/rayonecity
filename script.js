@@ -164,9 +164,54 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 모든 필수 요소 정상 통과 시 모달 띄우기
-      resultModal.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // 모달 노출 시 뒷배경 스크롤 방지
+      // 제출 버튼 로딩 상태 표시
+      const submitBtn = reservationForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn ? submitBtn.innerHTML : '신청하기';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '전송 중...';
+      }
+
+      // 데이터 수집
+      const formData = {
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        type: document.getElementById('type').value,
+        residence: document.getElementById('residence').value.trim(),
+        visit_date: document.getElementById('visit_date').value.trim(),
+        message: document.getElementById('message').value.trim(),
+        source: document.querySelector('input[name="source"]:checked')?.value || '기타'
+      };
+
+      // API 호출
+      fetch('/api/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('API request failed');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // 성공 시 완료 모달 띄우기
+        resultModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // 모달 노출 시 뒷배경 스크롤 방지
+      })
+      .catch(error => {
+        console.error('Submission error:', error);
+        alert('신청 전송에 실패했습니다. 대표 번호(1551-2811)로 연락해 예약해 주시면 친절히 안내 도와드리겠습니다.');
+      })
+      .finally(() => {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+      });
     });
 
     // 결과 안내 모달 닫기 제어

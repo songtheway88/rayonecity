@@ -141,6 +141,30 @@ button {
   z-index: 1;
 }
 
+.image-slot:has(img) {
+  background: var(--bg-white);
+  border-style: solid;
+  border-color: var(--border-color);
+  padding: 0;
+}
+
+.image-slot:has(img)::before {
+  display: none;
+}
+
+.image-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.plan-card .image-slot img {
+  object-fit: contain;
+  background-color: var(--bg-white);
+  padding: 10px;
+}
+
 /* 3. 레이아웃 구조 */
 .container {
   width: 100%;
@@ -354,6 +378,13 @@ button {
   width: 100%;
   height: 100%;
   z-index: 1;
+}
+
+.hero-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .hero-placeholder {
@@ -935,9 +966,11 @@ button {
   aspect-ratio: 4 / 3;
 }
 
-.location-image-slot .image-slot {
+.location-image-slot img {
+  width: 100%;
   height: 100%;
-  border: none;
+  object-fit: cover;
+  display: block;
 }
 
 .location-info {

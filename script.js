@@ -266,4 +266,58 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // === 7. 동적 비디오 임베드 재생 ===
+  const videoEmbeds = document.querySelectorAll('[data-video-embed]');
+  videoEmbeds.forEach(container => {
+    const videoId = container.getAttribute('data-video-embed');
+    
+    const playTrigger = container.classList.contains('tour-card') 
+      ? container.querySelector('.tour-image') 
+      : container.querySelector('.video-placeholder');
+
+    const loadVideo = () => {
+      const targetArea = container.classList.contains('tour-card')
+        ? container.querySelector('.tour-image')
+        : container.querySelector('.video-placeholder');
+        
+      if (!targetArea) return;
+
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute('src', `https://tv.naver.com/embed/${videoId}?autoPlay=true`);
+      iframe.setAttribute('title', '네이버 TV 동영상 플레이어');
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'autoplay; encrypted-media');
+      iframe.setAttribute('allowfullscreen', 'true');
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.border = 'none';
+      iframe.style.position = 'absolute';
+      iframe.style.top = '0';
+      iframe.style.left = '0';
+
+      targetArea.innerHTML = '';
+      targetArea.appendChild(iframe);
+      
+      const moreBtn = container.querySelector('.tour-more-btn');
+      if (moreBtn) {
+        moreBtn.textContent = '영상 재생 중';
+        moreBtn.style.opacity = '0.7';
+        moreBtn.style.cursor = 'default';
+        moreBtn.disabled = true;
+      }
+    };
+
+    if (playTrigger) {
+      playTrigger.addEventListener('click', loadVideo);
+    }
+    
+    const moreBtn = container.querySelector('.tour-more-btn');
+    if (moreBtn) {
+      moreBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        loadVideo();
+      });
+    }
+  });
 });

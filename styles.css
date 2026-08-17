@@ -831,6 +831,8 @@ button {
   display: grid;
   grid-template-columns: 1fr;
   gap: 30px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .tour-card {
@@ -845,7 +847,7 @@ button {
 
 .tour-image {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 9 / 16;
 }
 
 .tour-image .image-slot {
@@ -1777,9 +1779,9 @@ details[open] summary::after {
     grid-template-columns: repeat(2, 1fr);
   }
   
-  /* 랜선투어 태블릿 그리드 */
+  /* 랜선투어 태블릿 그리드 - 카드 1개로 변경되어 1열 중앙 정렬 유지 */
   .tour-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
   
   /* 입지환경 태블릿 그리드 */

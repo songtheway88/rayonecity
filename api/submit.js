@@ -34,25 +34,33 @@ export default async function handler(req, res) {
 ${message || '없음'}
 `.trim();
 
-    // 텔레그램 봇 API 호출
+    // 텔레그램 봇 API 호출 (다중 수신 지원)
     const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-    const response = await fetch(telegramUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: text,
-      }),
+    const chatIds = chatId.split(',').map(id => id.trim()).filter(Boolean);
+
+    const sendPromises = chatIds.map(async (id) => {
+      try {
+        const response = await fetch(telegramUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            chat_id: id,
+            text: text,
+          }),
+        });
+        
+        const result = await response.json();
+        if (!result.ok) {
+          console.error(`Telegram API Error for chatId ${id}:`, result);
+        }
+      } catch (err) {
+        console.error(`Fetch error for chatId ${id}:`, err);
+      }
     });
 
-    const result = await response.json();
-
-    if (!result.ok) {
-      console.error('Telegram API Response Error:', result);
-      return res.status(500).json({ error: '텔레그램 알림 전송에 실패했습니다.' });
-    }
+    await Promise.all(sendPromises);
 
     return res.status(200).json({ success: true });
   } catch (err) {

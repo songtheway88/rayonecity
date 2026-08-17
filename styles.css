@@ -1917,9 +1917,11 @@ details[open] summary::after {
     aspect-ratio: 16 / 10;
   }
   
-  /* 더 알아보기 데스크탑 */
+  /* 더 알아보기 데스크탑 - 카드 2개로 변경됨에 따라 2열 정렬 및 최대 너비 제한 */
   .info-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 860px;
+    margin: 0 auto;
   }
   
   /* 푸터 데스크탑 */

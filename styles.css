@@ -1105,6 +1105,68 @@ details[open] summary::after {
   line-height: 1.6;
 }
 
+/* 12-1. 네이버 톡톡 섹션 */
+.talktalk-section {
+  background-color: var(--bg-white);
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.talktalk-card {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  background-color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  text-align: center;
+  box-shadow: var(--box-shadow);
+}
+
+.talktalk-header {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.talktalk-badge {
+  background-color: #03C75A;
+  color: var(--text-white, #ffffff);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+}
+
+.talktalk-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.talktalk-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.talktalk-banner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 75px;
+}
+
+.talktalk-banner-wrapper .talk_banner_div {
+  margin: 0 auto;
+}
+
 /* 13. 더 알아보기 (외부 링크) */
 .info-grid {
   display: grid;

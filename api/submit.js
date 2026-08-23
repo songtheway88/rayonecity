@@ -19,14 +19,17 @@ async function sendTelegramDirect({ name, phone, type, residence, visit_date, me
     return;
   }
 
+  const isEbook = type === '무료 전자책' || type === '전자책 신청' || (message && message.includes('전자책'));
+  const headerTitle = isEbook ? '📖 [청주 테크노 레이원시티] 무료 전자책 신청' : '🔔 [청주 테크노 레이원시티] 신규 방문상담 예약';
+
   const text = `
-🔔 [청주 테크노 레이원시티] 신규 상담 예약
+${headerTitle}
 ━━━━━━━━━━━━━━━━━━━━
 ■ 성함: ${name || '미입력'}
 ■ 연락처: ${phone || '미입력'}
-■ 관심 평형: ${type || '미입력'}
-■ 거주지역: ${residence || '미입력'}
-■ 방문희망: ${visit_date || '미입력'}
+■ 구분/타입: ${type || '미입력'}
+■ 거주지역/구분: ${residence || '미입력'}
+■ 방문일시/신청: ${visit_date || '미입력'}
 ■ 유입경로: ${source || '미입력'}
 ━━━━━━━━━━━━━━━━━━━━
 ■ 상세 문의사항:
@@ -108,13 +111,18 @@ export default async function handler(req, res) {
   try {
     const formData = req.body;
 
-    // 분양천국 대시보드로 전송 (리드 저장 + 텔레그램 알림을 대시보드가 처리)
-    // 실패 시에만 예전 방식(직접 텔레그램 전송)으로 안전하게 대체한다.
+    // 1. 텔레그램 직접 전송 (환경변수 설정 시 무조건 발송)
+    try {
+      await sendTelegramDirect(formData);
+    } catch (teleErr) {
+      console.error('Direct Telegram send error:', teleErr);
+    }
+
+    // 2. 분양천국 대시보드로 전송 (설정되어 있을 때)
     try {
       await sendToDashboard(formData);
     } catch (dashboardErr) {
-      console.error('Dashboard intake error, falling back to direct Telegram send:', dashboardErr);
-      await sendTelegramDirect(formData);
+      console.error('Dashboard intake error:', dashboardErr);
     }
 
     return res.status(200).json({ success: true });

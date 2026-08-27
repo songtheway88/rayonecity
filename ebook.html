@@ -20,6 +20,24 @@
 
     gtag('config', 'AW-18319293462');
   </script>
+  <!-- Google tag (gtag.js) event - delayed navigation helper -->
+  <script>
+    // Helper function to delay opening a URL until a gtag event is sent.
+    // Call it in response to an action that should navigate to a URL.
+    function gtagSendEvent(url) {
+      var callback = function () {
+        if (typeof url === 'string') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'form_start', {
+        'event_callback': callback,
+        'event_timeout': 2000,
+        // <event_parameters>
+      });
+      return false;
+    }
+  </script>
 
   <meta name="format-detection" content="telephone=no">
   <title>청주 테크노폴리스 핵심 투자 보고서 무료 전자책 신청 | 청주 테크노 레이원시티</title>
@@ -355,6 +373,10 @@
             body: JSON.stringify(formData)
           })
           .then(() => {
+            // 구글 디스플레이 광고 전환 이벤트 전송
+            if (typeof gtag === 'function') {
+              gtag('event', 'form_start');
+            }
             // Show modal & open Google Doc link
             ebookResultModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';

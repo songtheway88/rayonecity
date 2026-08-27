@@ -198,6 +198,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return response.json();
       })
       .then(data => {
+        // 구글 디스플레이 광고 전환 이벤트 전송
+        if (typeof gtag === 'function') {
+          gtag('event', 'form_start');
+        }
         // 성공 시 완료 모달 띄우기
         resultModal.style.display = 'flex';
         document.body.style.overflow = 'hidden'; // 모달 노출 시 뒷배경 스크롤 방지

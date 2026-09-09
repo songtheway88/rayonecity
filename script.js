@@ -10,6 +10,62 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // === 0. 시공사 선정 완료 축하 이벤트 팝업 모달 제어 ===
+  const eventModal = document.getElementById('eventModal');
+  const closeEventModal = document.getElementById('closeEventModal');
+  const btnEventHome = document.getElementById('btnEventHome');
+  const btnEventVisit = document.getElementById('btnEventVisit');
+  const chkTodayClose = document.getElementById('chkTodayClose');
+  const subfooterCloseBtn = document.getElementById('subfooterCloseBtn');
+
+  if (eventModal) {
+    const POPUP_KEY = 'rayone_event_popup_hide_until';
+    const hideUntil = localStorage.getItem(POPUP_KEY);
+    const now = new Date().getTime();
+
+    // '오늘 하루 보지 않기' 설정 시간이 안 지났으면 숨김 유지, 아니면 팝업 표시
+    if (!hideUntil || now > parseInt(hideUntil, 10)) {
+      setTimeout(() => {
+        eventModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }, 300);
+    }
+
+    const hideEventModal = () => {
+      if (chkTodayClose && chkTodayClose.checked) {
+        const nextDay = new Date().getTime() + (24 * 60 * 60 * 1000);
+        localStorage.setItem(POPUP_KEY, nextDay.toString());
+      }
+      eventModal.style.display = 'none';
+      document.body.style.overflow = '';
+    };
+
+    closeEventModal?.addEventListener('click', hideEventModal);
+    btnEventHome?.addEventListener('click', hideEventModal);
+    subfooterCloseBtn?.addEventListener('click', hideEventModal);
+
+    // 우하단 '방문예약' 버튼 클릭시 팝업 닫고 방문예약 폼 섹션으로 스크롤 이동
+    btnEventVisit?.addEventListener('click', () => {
+      hideEventModal();
+      const visitSection = document.getElementById('visit');
+      if (visitSection) {
+        const headerHeight = document.querySelector('[data-header]')?.offsetHeight || 70;
+        const targetPosition = visitSection.getBoundingClientRect().top + window.scrollY - headerHeight;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+
+    // 배경 백드롭 클릭 시 닫기
+    eventModal.addEventListener('click', (e) => {
+      if (e.target === eventModal) {
+        hideEventModal();
+      }
+    });
+  }
+
   // === 1. 모바일 메뉴 토글 ===
   const menuButton = document.querySelector('[data-menu-button]');
   const mobileNav = document.querySelector('[data-mobile-nav]');

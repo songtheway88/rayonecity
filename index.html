@@ -933,6 +933,51 @@
     </div>
   </div>
 
+  <!-- 시공사 선정 완료 축하 이벤트 팝업 모달 -->
+  <div class="result-modal-backdrop event-modal-backdrop" id="eventModal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="eventModalTitle">
+    <div class="event-modal">
+      <div class="event-modal-header">
+        <div class="event-badge">🎉 SPECIAL EVENT</div>
+        <button type="button" class="event-modal-close" id="closeEventModal" aria-label="팝업 닫기">&times;</button>
+      </div>
+      <div class="event-modal-body">
+        <div class="event-header-tag">축하 이벤트 진행중</div>
+        <h2 id="eventModalTitle" class="event-title">
+          청주 테크노 레이원시티<br>
+          <span class="highlight-gold">시공사 선정 완료 축하 이벤트</span>
+        </h2>
+        <p class="event-desc">
+          청주 테크노 레이원시티 시공사 선정이 성공적으로 완료되었습니다!<br>
+          성원해 주신 고객님께 감사드리며, <strong>특별 분양 혜택 및 방문예약 이벤트</strong>를 진행합니다.
+        </p>
+        <div class="event-highlight-box">
+          <div class="event-info-item">
+            <span class="item-icon">🎁</span>
+            <span class="item-text"><strong>방문예약 혜택:</strong> 모바일 VIP 초청장 &amp; 특별 사은품 증정</span>
+          </div>
+          <div class="event-info-item">
+            <span class="item-icon">🏢</span>
+            <span class="item-text"><strong>선착순 혜택:</strong> 로얄동 · 로얄층 우선 선점 기회</span>
+          </div>
+          <div class="event-info-item">
+            <span class="item-icon">📞</span>
+            <span class="item-text"><strong>1:1 맞춤 상담:</strong> 전문 상담사 신속 안내 (대표번호 1551-2811)</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-modal-footer">
+        <button type="button" class="btn-event-home" id="btnEventHome">홈페이지 보러가기</button>
+        <button type="button" class="btn-event-visit" id="btnEventVisit">방문예약</button>
+      </div>
+      <div class="event-modal-subfooter">
+        <label class="today-close-label">
+          <input type="checkbox" id="chkTodayClose"> 오늘 하루 동안 보지 않기
+        </label>
+        <button type="button" class="subfooter-close-btn" id="subfooterCloseBtn">닫기</button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 

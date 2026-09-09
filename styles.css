@@ -391,7 +391,8 @@ button {
   z-index: 1;
 }
 
-.hero-gif {
+.hero-gif,
+.hero-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
